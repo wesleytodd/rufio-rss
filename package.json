@@ -1,0 +1,18 @@
+{
+  "name": "rufio-rss",
+  "version": "0.0.0",
+  "description": "An rss plugin for rufio",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "rss",
+    "rufio"
+  ],
+  "author": "Wes Todd",
+  "license": "ISC",
+  "dependencies": {
+    "rss": "~0.3.0"
+  }
+}
