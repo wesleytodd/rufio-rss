@@ -25,7 +25,7 @@ module.exports = function(rufio) {
 	});
 
 	// Hook in after the build to write the rss feed
-	rufio.hooks.on('afterBuild', function(rufio, done) {
+	rufio.hooks.on('afterWrite', function(rufio, done) {
 
 		var feeds = rufio.config.get('rss.feeds');
 
