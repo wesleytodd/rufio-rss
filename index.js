@@ -71,6 +71,7 @@ module.exports = function(rufio) {
 			});
 
 			// Loop through types and items
+				console.log(feeds[feedPath].types);
 			for (var t in feeds[feedPath].types) {
 				// Get the type key
 				var type = feeds[feedPath].types[t];
@@ -78,20 +79,20 @@ module.exports = function(rufio) {
 				// Loop through the items in that type
 				for (var i in rufio.types[type].items) {
 					var item = rufio.types[type].items[i];
-					if (item.meta.status == 'Published') {
+					if (item.meta('status') == 'Published') {
 						feed.item({
-							title: item.meta.title,
-							description: item.meta.description || item.content,
-							url: item.meta.absUrl,
-							author: item.meta.author || rufio.config.get('author'),
-							date: item.meta.date
+							title: item.meta('title'),
+							description: item.meta('description') || item.content,
+							url: item.meta('absUrl'),
+							author: item.meta('author') || rufio.config.get('author'),
+							date: item.meta('date')
 						});
 					}
 				}
 			}
 
 			// Write the file
-			var writePath = path.join(rufio.config.get('BUILD_ROOT'), feedPath);
+			var writePath = path.join(rufio.config.get('BUILD_DIR'), feedPath);
 			rufio.logger.info('Writing RSS feed ' + writePath);
 			rufio.util.writeFile(writePath, feed.xml(), function(err) {
 				if (err) {
