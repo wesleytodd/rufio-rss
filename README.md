@@ -8,7 +8,6 @@ Then add `rss` to your enabled plugins in your projects `rufio.json` file and co
 
 ```
 	"plugins": {
-		"directory": "plugins",
 		"active": [
 			"rss"
 		]
