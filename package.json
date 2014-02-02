@@ -1,7 +1,7 @@
 {
   "name": "rufio-rss",
-  "version": "0.0.1",
-  "description": "An rss plugin for rufio",
+  "version": "0.0.2",
+  "description": "An rss plugin for Rufio",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,5 +18,9 @@
   "repository": {
     "type": "git",
     "url": "git@github.com:wesleytodd/rufio-rss.git"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/wesleytodd/rufio-rss/issues"
+  },
+  "homepage": "https://github.com/wesleytodd/rufio-rss"
 }

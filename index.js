@@ -27,18 +27,28 @@ module.exports = function(rufio) {
 	// Hook in after the build to write the rss feed
 	rufio.hooks.on('afterWrite', function(rufio, done) {
 
-		var feeds = rufio.config.get('rss.feeds');
+		var feeds = rufio.config.get('rss:feeds');
 
 		// Keep track of the complete feeds
 		// to tell when to call the done function
 		var feedsComplete = 0;
 
+		// If no feeds, just return
+		if (feeds.length == 0) {
+			rufio.logger.warn('No rss feeds specified');
+			done();
+		}
+
 		// Loop through the feeds and write the files
 		for (var feedPath in feeds) {
+
+			// Log start
+			rufio.logger.info('Generating RSS feed');
+
 			// Create the feed
 			var feed = new RSS({
 				// Rufio Generator
-				generator: 'Rufio ' + rufio.config.get('RUFIO_VERSION'),
+				generator: 'Rufio ' + rufio.version,
 
 				// Feed info
 				feed_url: url.format({
@@ -47,14 +57,14 @@ module.exports = function(rufio) {
 					pathname: feedPath
 				}),
 				// Either the feed image or the main rss image
-				image_url: feeds[feedPath].image || rufio.config.get('rss.image'),
+				image_url: feeds[feedPath].image || rufio.config.get('rss:image'),
 				pubDate: Date.now(),
 
 				// General site info
 				title: rufio.config.get('title'),
 				site_url: url.format({
 					protocol: rufio.config.get('protocol') || 'http',
-					host: config.get('hostname')
+					host: rufio.config.get('hostname')
 				}),
 				description: rufio.config.get('description'),
 				author: rufio.config.get('author')
@@ -66,8 +76,8 @@ module.exports = function(rufio) {
 				var type = feeds[feedPath].types[t];
 
 				// Loop through the items in that type
-				for (var i in rufio.data[type].items) {
-					var item = rufio.data[type].items[i];
+				for (var i in rufio.types[type].items) {
+					var item = rufio.types[type].items[i];
 					if (item.meta.status == 'Published') {
 						feed.item({
 							title: item.meta.title,
@@ -81,9 +91,11 @@ module.exports = function(rufio) {
 			}
 
 			// Write the file
-			rufio.util.writeFile(path.join(rufio.config.get('BUILD_ROOT'), rufio.config.get('BUILD_VERSION'), feedPath), feed.xml(), function(err) {
+			var writePath = path.join(rufio.config.get('BUILD_ROOT'), feedPath);
+			rufio.logger.info('Writing RSS feed ' + writePath);
+			rufio.util.writeFile(writePath, feed.xml(), function(err) {
 				if (err) {
-					console.error(err);
+					rufio.logger.error('Error writing feed', err);
 				}
 
 				// Track the complete feeds and call done
