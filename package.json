@@ -1,6 +1,6 @@
 {
   "name": "rufio-rss",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "An rss plugin for Rufio",
   "main": "index.js",
   "scripts": {
@@ -12,6 +12,9 @@
   ],
   "author": "Wes Todd",
   "license": "ISC",
+  "peerDependencies": {
+    "rufio": "~0.1.3"
+  },
   "dependencies": {
     "rss": "~0.3.0"
   },

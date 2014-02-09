@@ -71,7 +71,6 @@ module.exports = function(rufio) {
 			});
 
 			// Loop through types and items
-				console.log(feeds[feedPath].types);
 			for (var t in feeds[feedPath].types) {
 				// Get the type key
 				var type = feeds[feedPath].types[t];
@@ -92,7 +91,7 @@ module.exports = function(rufio) {
 			}
 
 			// Write the file
-			var writePath = path.join(rufio.config.get('BUILD_DIR'), feedPath);
+			var writePath = path.join(rufio.BUILD_DIR, feedPath);
 			rufio.logger.info('Writing RSS feed ' + writePath);
 			rufio.util.writeFile(writePath, feed.xml(), function(err) {
 				if (err) {
